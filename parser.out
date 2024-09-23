@@ -1,0 +1,59 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> statements
+Rule 1     statements -> statement
+Rule 2     statements -> statement statements
+Rule 3     statement -> EN_NENJIL_KUDI_IRUKKUM LPAREN expression RPAREN
+Rule 4     statement -> VARIABLE ASSIGN expression
+Rule 5     statement -> VARIABLE PLUS_ASSIGN expression
+Rule 6     statement -> VARIABLE MINUS_ASSIGN expression
+Rule 7     statement -> VARIABLE TIMES_ASSIGN expression
+Rule 8     statement -> VARIABLE DIVIDE_ASSIGN expression
+Rule 9     statement -> VARIABLE INCREMENT
+Rule 10    statement -> VARIABLE DECREMENT
+Rule 11    statement -> PRE_INCREMENT VARIABLE
+Rule 12    statement -> PRE_DECREMENT VARIABLE
+Rule 13    expression -> expression PLUS expression
+Rule 14    expression -> expression MINUS expression
+Rule 15    expression -> expression TIMES expression
+Rule 16    expression -> expression DIVIDE expression
+Rule 17    expression -> LPAREN expression RPAREN
+Rule 18    expression -> STRING
+Rule 19    expression -> NUMBER
+Rule 20    expression -> VARIABLE
+Rule 21    variables_list -> VARIABLE
+Rule 22    variables_list -> VARIABLE COMMA variables_list
+
+Terminals, with rules where they appear
+
+ASSIGN               : 4
+COMMA                : 22
+DIVIDE               : 16
+EN_NENJIL_KUDI_IRUKKUM : 3
+LPAREN               : 3 17
+MINUS                : 14
+NUMBER               : 19
+PLUS                 : 13
+RPAREN               : 3 17
+STRING               : 18
+TIMES                : 15
+VARIABLE             : 4 5 6 7 8 9 10 11 12 20 21 22
+error                : 
+
+Nonterminals, with rules where they appear
+
+DECREMENT            : 10
+DIVIDE_ASSIGN        : 8
+INCREMENT            : 9
+MINUS_ASSIGN         : 6
+PLUS_ASSIGN          : 5
+PRE_DECREMENT        : 12
+PRE_INCREMENT        : 11
+TIMES_ASSIGN         : 7
+expression           : 3 4 5 6 7 8 13 13 14 14 15 15 16 16 17
+statement            : 1 2
+statements           : 2 0
+variables_list       : 22
+
