@@ -252,56 +252,60 @@ def parser(tokens):
         return value
 
     def parse_list_indexing(var_name, value):
-            consume('LBRACKET')
-            start_index = parse_expression()  # Parse the start index
+        consume('LBRACKET')
+        start_index = parse_expression()  # Parse the start index
 
-            # Initialize end_index to None
-            end_index = None
+        # Initialize end_index to None
+        end_index = None
+        
 
-            # Check for COLON to determine if there's an end index
-            if current_token() and current_token()[0] == 'COLON':
-                consume('COLON')
-                end_index = parse_expression()  # Get end index if present
-
-            # If end_index is None, set it based on start_index
-            if end_index is None:
-                if start_index > 0:
-                    end_index = start_index + 1  # Set end_index to start_index + 1
-                else:
-                    end_index = len(value)  # Default to length of value if start_index is not positive
-
-            consume('RBRACKET')
-
-            print(f"Variable '{var_name}': Value = '{value}', Start Index = {start_index}, End Index = {end_index}")
-
-            # Handling slicing
-            if isinstance(value, str):
-                # Adjust for negative indexing
-                if isinstance(start_index, int):
-                    # Handle negative indexing for start_index
-                    if start_index < 0:
-                        start_index += len(value)
-
-                    # Handle negative indexing for end_index
-                    if end_index < 0:
-                        end_index += len(value)  # Adjust for negative indexing
-
-                    # Check for valid indices
-                    if 0 <= start_index < end_index <= len(value):
-                        # If start_index equals end_index, return the single character
-                        if start_index == end_index:
-                            result = value[start_index]  # Return the character at start_index
-                        else:
-                            result = value[start_index:end_index]  # Return the sliced string
-
-                        print(f"Slicing result: '{result}'")
-                        return result
-                    else:
-                        raise ValueError(f"Index {start_index}:{end_index} out of bounds for string '{value}'")
-                else:
-                    raise ValueError(f"Invalid start index for string slicing: {start_index}")
+        # Check for COLON to determine if there's an end index
+        if current_token() and current_token()[-2] == 'COLON':
+            consume('COLON')
+            # Set end_index to the length of value if no expression follows the colon
+            if current_token() and current_token()[0] != 'RBRACKET':
+                end_index = parse_expression()  # Parse end index after the colon
             else:
-                raise ValueError(f"Indexing not supported for variable '{var_name}' of type {type(value).__name__}")
+                end_index = len(value)
+
+        # If end_index is still None, set it based on start_index
+        if end_index is None:
+            if start_index >= 0:
+                end_index = start_index + 1  # Set end_index to start_index + 1
+            else:
+                end_index = len(value)  # Default to length of value if start_index is not positive
+
+        consume('RBRACKET')
+
+        print(f"Variable '{var_name}': Value = '{value}', Start Index = {start_index}, End Index = {end_index}")
+
+        # Handling slicing
+        if isinstance(value, str):
+            # Adjust for negative indexing
+            if isinstance(start_index, int):
+                # Handle negative indexing for start_index
+                if start_index < 0:
+                    start_index += len(value)
+
+                # Handle negative indexing for end_index if it's defined
+                if end_index is not None and end_index < 0:
+                    end_index += len(value)
+
+                # Check for valid indices
+                if 0 <= start_index <= len(value) and 0 <= end_index <= len(value):
+                    # Ensure start_index is always less than end_index
+                    if start_index > end_index:
+                        start_index, end_index = end_index, start_index
+                    result = value[start_index:end_index]  # Return the sliced string
+                    print(f"Slicing result: '{result}'")
+                    return result
+                else:
+                    raise ValueError(f"Index {start_index}:{end_index} out of bounds for string '{value}'")
+            else:
+                raise ValueError(f"Invalid start index for string slicing: {start_index}")
+        else:
+            raise ValueError(f"Indexing not supported for variable '{var_name}' of type {type(value).__name__}")
+    
 
 
     while index < len(tokens):
@@ -328,7 +332,7 @@ def parser(tokens):
 if __name__ == "__main__":
     code = '''en_nenjil_kudi_irukkum("Hello Thalapthy")
     a = "Hello, World!"
-    en_nenjil_kudi_irukkum(a[-1])
+    en_nenjil_kudi_irukkum(a[:-1])
 
     '''
     
