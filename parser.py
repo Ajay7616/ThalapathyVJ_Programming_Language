@@ -253,10 +253,24 @@ def parser(tokens):
 
     def parse_list_indexing(var_name, value):
         consume('LBRACKET')
-        start_index = parse_expression()  # Parse the start index
 
-        # Initialize end_index to None
+        start_index = None
         end_index = None
+        
+        if current_token() and current_token()[0] == 'COLON':
+            consume('COLON')
+            
+            # Handle negative end index (e.g., a[:-1])
+            if current_token() and current_token()[0] == 'MINUS':
+                consume('MINUS')
+                end_index = -parse_expression()
+            else:
+                end_index = parse_expression()
+
+            # Default start_index to 0 for slices like a[:5] or a[:-1]
+            start_index = 0
+        else:
+            start_index = parse_expression()
         
 
         # Check for COLON to determine if there's an end index
@@ -277,8 +291,6 @@ def parser(tokens):
 
         consume('RBRACKET')
 
-        print(f"Variable '{var_name}': Value = '{value}', Start Index = {start_index}, End Index = {end_index}")
-
         # Handling slicing
         if isinstance(value, str):
             # Adjust for negative indexing
@@ -297,7 +309,6 @@ def parser(tokens):
                     if start_index > end_index:
                         start_index, end_index = end_index, start_index
                     result = value[start_index:end_index]  # Return the sliced string
-                    print(f"Slicing result: '{result}'")
                     return result
                 else:
                     raise ValueError(f"Index {start_index}:{end_index} out of bounds for string '{value}'")
@@ -332,7 +343,7 @@ def parser(tokens):
 if __name__ == "__main__":
     code = '''en_nenjil_kudi_irukkum("Hello Thalapthy")
     a = "Hello, World!"
-    en_nenjil_kudi_irukkum(a[:-1])
+    en_nenjil_kudi_irukkum(a[-3:-1])
 
     '''
     
