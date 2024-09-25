@@ -14,7 +14,7 @@ en_nenjil_kudi_irukkum(z)
 v = coca_cola(123456.7890)  
 en_nenjil_kudi_irukkum(v)  
 
-s = nei_eduthutu_vaa(2)  
+s = nei_eduthutu_vaa("2")  
 f = nei_nei_eduthutu_vaa(3.14)  
 en_nenjil_kudi_irukkum(f)  
 en_nenjil_kudi_irukkum(s)  
@@ -69,3 +69,25 @@ en_nenjil_kudi_irukkum(6 ^ 3)
 en_nenjil_kudi_irukkum(~3)
 en_nenjil_kudi_irukkum(3 << 2)
 en_nenjil_kudi_irukkum(8 >> 2)
+
+x = 5
+en_nenjil_kudi_irukkum(x < 15 sura y > 5)
+en_nenjil_kudi_irukkum(x < 5 kuruvi y < 4)
+en_nenjil_kudi_irukkum(villu(x > 3 sura x < 10))
+
+a = """Lorem ipsum dolor sit amet,
+consectetur adipiscing elit,
+sed do eiusmod tempor incididunt
+ut labore et dolore magna aliqua.""" 
+en_nenjil_kudi_irukkum(a)
+
+a = "Hello, World!"
+en_nenjil_kudi_irukkum(a[0])
+en_nenjil_kudi_irukkum(a[1])
+en_nenjil_kudi_irukkum(a[1:3])
+en_nenjil_kudi_irukkum(a[-1])
+en_nenjil_kudi_irukkum(a[-3:-1])
+en_nenjil_kudi_irukkum(a[1:])
+en_nenjil_kudi_irukkum(a[:-1])
+en_nenjil_kudi_irukkum(a.yeru_yeru_muneru())
+en_nenjil_kudi_irukkum(a.life_is_very_short_nanba())

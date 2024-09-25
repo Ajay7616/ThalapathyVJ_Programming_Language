@@ -176,10 +176,29 @@ def parser(tokens):
             return consume('MULTILINE_STRING')
         elif token[0] == 'VARIABLE':
             var_name = consume('VARIABLE')
-            if var_name in variables:
-                return handle_indexing(var_name)
+            if current_token() and current_token()[0] == 'MISMATCH':
+                consume('MISMATCH')
+                method_name = current_token()
+                if method_name[0] in ('UPPER', 'LOWER'):
+                    consume(method_name[0])  # Consume the method name
+                    consume('LPAREN')
+                    # Ensure that the variable is defined
+                    if var_name in variables:
+                        value = variables[var_name]
+                        # Call the appropriate method based on the method name
+                        if method_name[0] == 'UPPER':
+                            result = value.upper() if isinstance(value, str) else str(value).upper()
+                        elif method_name[0] == 'LOWER':
+                            result = value.lower() if isinstance(value, str) else str(value).lower()
+                    else:
+                        raise ValueError(f"Undefined variable '{var_name}'")
+                    consume('RPAREN')
+                    return result               
             else:
-                raise ValueError(f"Undefined variable '{var_name}'")
+                if var_name in variables:
+                    return handle_indexing(var_name)
+                else:
+                    raise ValueError(f"Undefined variable '{var_name}'")
         elif token[0] == 'LPAREN':
             consume('LPAREN')
             value = parse_expression()
@@ -227,6 +246,24 @@ def parser(tokens):
             value = parse_expression()
             consume('RPAREN')
             return str(value)
+        elif token[0] == 'UPPER':
+            consume('UPPER')
+            consume('LPAREN')
+            value = parse_expression()  # Get the string expression
+            consume('RPAREN')
+            if isinstance(value, str):
+                return value.upper()
+            else:
+                raise ValueError(f"upper() expects a string, but got {type(value)}")
+        elif token[0] == 'LOWER':
+            consume('LOWER')
+            consume('LPAREN')
+            value = parse_expression()  # Get the string expression
+            consume('RPAREN')
+            if isinstance(value, str):
+                return value.lower()
+            else:
+                raise ValueError(f"lower() expects a string, but got {type(value)}")
         elif token[0] == 'TRUE':
             consume('TRUE')
             return True
@@ -343,8 +380,10 @@ def parser(tokens):
 if __name__ == "__main__":
     code = '''en_nenjil_kudi_irukkum("Hello Thalapthy")
     a = "Hello, World!"
-    en_nenjil_kudi_irukkum(a[-3:-1])
-
+    x = a.yeru_yeru_muneru()
+    y = a.life_is_very_short_nanba()
+    en_nenjil_kudi_irukkum(a.yeru_yeru_muneru())
+    en_nenjil_kudi_irukkum(y)
     '''
     
     tokens = list(lexer(code))  # Convert the generator to a list

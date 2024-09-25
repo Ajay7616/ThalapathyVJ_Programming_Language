@@ -4,6 +4,8 @@ import re
 token_specification = [
     ('MULTILINE_STRING', r'""".*?"""|\'\'\'.*?\'\'\''),
     ('PRINT', r'en_nenjil_kudi_irukkum'),
+    ('UPPER', r'yeru_yeru_muneru'),  # Uppercase string function
+    ('LOWER', r'life_is_very_short_nanba'),
     ('PLUS_ASSIGN', r'\+='), 
     ('MINUS_ASSIGN', r'-='), 
     ('EXPONENTIATION_ASSIGN', r'\*\*='),  
@@ -81,13 +83,26 @@ def lexer(code):
             value = True  # Convert to Python boolean True
         elif type_ == 'FALSE':
             value = False  # Convert to Python boolean False
+        elif type_ == 'UPPER':
+            # Find next token and apply .upper() method
+            next_token = next(lexer(code), None)
+            if next_token and next_token[0] == 'STRING':
+                value = next_token[1].upper()
+        
+        elif type_ == 'LOWER':
+            # Find next token and apply .lower() method
+            next_token = next(lexer(code), None)
+            if next_token and next_token[0] == 'STRING':
+                value = next_token[1].lower()
 
         yield (type_, value)
 
 if __name__ == "__main__":
     code = '''en_nenjil_kudi_irukkum("Hello Thalapthy") 
     a = "Hello World"
-    en_nenjil_kudi_irukkum(a[1:])
+    a = "Hello World"
+    en_nenjil_kudi_irukkum(a.yeru_yeru_muneru())
+    en_nenjil_kudi_irukkum(a.life_is_very_short_nanba())
     '''
     
     tokens = list(lexer(code))  # Convert the generator to a list
