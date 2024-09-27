@@ -7,6 +7,7 @@ token_specification = [
     ('UPPER', r'yeru_yeru_muneru'),  # Uppercase string function
     ('LOWER', r'life_is_very_short_nanba'),
     ('REPLACE', r'nee_poo_nee_vaa'),
+    ('SPLIT', r'kaakhi'),
     ('PLUS_ASSIGN', r'\+='), 
     ('MINUS_ASSIGN', r'-='), 
     ('EXPONENTIATION_ASSIGN', r'\*\*='),  
@@ -114,10 +115,20 @@ def lexer(code):
                                     value = variables[var_name].replace(old_substring, new_substring)
                                 else:
                                     raise ValueError(f"Undefined variable '{var_name}'")
+        elif type_ == 'SPLIT':
+            next_token = next(lexer(code), None)  # Get the string to split
+            if next_token and next_token[0] == 'STRING':
+                string_to_split = next_token[1]  # The string itself
+                next_token = next(lexer(code), None)  # Check if a separator is provided
+                if next_token and next_token[0] == 'STRING':
+                    separator = next_token[1]
+                value = string_to_split.split(separator)
+                print(f"Split result: {value}")
         yield (type_, value)
 
 if __name__ == "__main__":
-    code = '''en_nenjil_kudi_irukkum("  Hello Thalapthy  ") 
+    code = '''en_nenjil_kudi_irukkum("Hello, Thalapthy")
+    kaakhi("Hello, World!")
 
     '''
     

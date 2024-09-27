@@ -179,7 +179,7 @@ def parser(tokens):
             if current_token() and current_token()[0] == 'MISMATCH':
                 consume('MISMATCH')
                 method_name = current_token()
-                if method_name[0] in ('UPPER', 'LOWER', 'REPLACE'):
+                if method_name[0] in ('UPPER', 'LOWER', 'REPLACE', 'SPLIT'):
                     consume(method_name[0])  # Consume the method name
                     consume('LPAREN')
                     # Ensure that the variable is defined
@@ -201,6 +201,23 @@ def parser(tokens):
                                 result = value.replace(old_substring, new_substring).replace(old_substring.lower(), new_substring)
                             else:
                                 raise ValueError(f"REPLACE method can only be used on strings. Provided value is {type(value).__name__}")
+                        elif method_name[0] == 'SPLIT':
+                            # Initialize the separator with whitespace as default
+                            separator = ' '  # Default separator
+                            
+                            # Check for optional separator argument
+                            if current_token() and current_token()[0] == 'STRING':
+                                separator = consume('STRING')  # Use the provided separator
+                            
+                            # Ensure the value is a string
+                            if isinstance(value, str):
+                                result = value.split(separator)
+                            else:
+                                raise ValueError(f"SPLIT method can only be used on strings. Provided value is {type(value).__name__}")
+                        
+                        # Consume RPAREN
+                        consume('RPAREN')
+                        return result
                     else:
                         raise ValueError(f"Undefined variable '{var_name}'")
                     consume('RPAREN')
@@ -394,9 +411,11 @@ if __name__ == "__main__":
     x = a.yeru_yeru_muneru()
     y = a.life_is_very_short_nanba()
     z = a.nee_poo_nee_vaa("H", "J")
+    d = a.kaakhi("o")
     en_nenjil_kudi_irukkum(a.yeru_yeru_muneru())
     en_nenjil_kudi_irukkum(y)
     en_nenjil_kudi_irukkum(z)
+    en_nenjil_kudi_irukkum(d)
     '''
     
     tokens = list(lexer(code))  # Convert the generator to a list
