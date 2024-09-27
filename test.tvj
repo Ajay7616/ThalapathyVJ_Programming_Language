@@ -94,3 +94,7 @@ en_nenjil_kudi_irukkum(a.life_is_very_short_nanba())
 en_nenjil_kudi_irukkum(" Hello, World! ")
 en_nenjil_kudi_irukkum(a.nee_poo_nee_vaa("O", "J"))
 en_nenjil_kudi_irukkum(a.kaakhi("o"))
+f = "K"
+p = "O"
+y = f + p
+en_nenjil_kudi_irukkum(y)

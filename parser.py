@@ -130,11 +130,17 @@ def parser(tokens):
         while current_token() and current_token()[0] in ('PLUS', 'MINUS'):
             op = consume(current_token()[0])
             right = parse_multiplicative_expression()
+            
             if op == '+':
-                left += right
+                # Only use string_concatenation when adding strings
+                if isinstance(left, str) or isinstance(right, str):
+                    left = string_concatenation(left, right)
+                else:
+                    left += right  # Perform normal addition for non-strings
             elif op == '-':
-                left -= right
+                left -= right  # Subtraction remains the same
         return left
+
 
     def parse_multiplicative_expression():
         left = parse_primary_expression()
@@ -220,8 +226,6 @@ def parser(tokens):
                         return result
                     else:
                         raise ValueError(f"Undefined variable '{var_name}'")
-                    consume('RPAREN')
-                    return result               
             else:
                 if var_name in variables:
                     return handle_indexing(var_name)
@@ -309,6 +313,19 @@ def parser(tokens):
             return result
         else:
             raise ValueError(f"Unexpected token in expression: {token}")
+
+    def string_concatenation(left, right):
+        """Concatenates two strings, adding a space only if necessary."""
+        if isinstance(left, str) and isinstance(right, str):
+            # Check for space before the `+` sign in `left`
+            if left.endswith(" ") or right.startswith(" "):
+                return left + " " + right  # Concatenate without additional space
+            else:
+                return left + right  # Add a space between the strings
+        else:
+            raise TypeError("Both arguments must be strings")
+
+
     
     def handle_indexing(var_name):
         value = variables[var_name]
@@ -407,15 +424,10 @@ def parser(tokens):
 
 if __name__ == "__main__":
     code = '''en_nenjil_kudi_irukkum("Hello Thalapthy")
-    a = "Hello, Thalapathy!"
-    x = a.yeru_yeru_muneru()
-    y = a.life_is_very_short_nanba()
-    z = a.nee_poo_nee_vaa("H", "J")
-    d = a.kaakhi("o")
-    en_nenjil_kudi_irukkum(a.yeru_yeru_muneru())
+    f = "K"
+    p = "O"
+    y = f + p
     en_nenjil_kudi_irukkum(y)
-    en_nenjil_kudi_irukkum(z)
-    en_nenjil_kudi_irukkum(d)
     '''
     
     tokens = list(lexer(code))  # Convert the generator to a list
