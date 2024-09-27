@@ -6,6 +6,7 @@ token_specification = [
     ('PRINT', r'en_nenjil_kudi_irukkum'),
     ('UPPER', r'yeru_yeru_muneru'),  # Uppercase string function
     ('LOWER', r'life_is_very_short_nanba'),
+    ('REPLACE', r'nee_poo_nee_vaa'),
     ('PLUS_ASSIGN', r'\+='), 
     ('MINUS_ASSIGN', r'-='), 
     ('EXPONENTIATION_ASSIGN', r'\*\*='),  
@@ -65,14 +66,15 @@ def lexer(code):
     for match in re.finditer(token_regex, code, re.DOTALL):
         type_ = match.lastgroup
         value = match.group()
+        
         if type_ == 'NEWLINE':
             continue
         elif type_ == 'SKIP':
             continue
         elif type_ == 'STRING':
-            value = value[1:-1]
+            value = value[1:-1].strip()  # Remove quotes and whitespace
         elif type_ == 'MULTILINE_STRING':
-            value = value[3:-3]  # Remove the surrounding quotes
+            value = value[3:-3].strip()  # Remove surrounding quotes and whitespace
         elif type_ == 'INTEGER':
             value = int(value)
         elif type_ == 'FLOAT_NUMBER':
@@ -88,22 +90,36 @@ def lexer(code):
             next_token = next(lexer(code), None)
             if next_token and next_token[0] == 'STRING':
                 value = next_token[1].upper()
-        
         elif type_ == 'LOWER':
             # Find next token and apply .lower() method
             next_token = next(lexer(code), None)
             if next_token and next_token[0] == 'STRING':
                 value = next_token[1].lower()
-
+        elif type_ == 'REPLACE':
+            next_token = next(lexer(code), None)
+            if next_token and next_token[0] == 'VARIABLE':
+                var_name = next_token[1]
+                next_token = next(lexer(code), None)  # Expect '('
+                if next_token and next_token[0] == 'LPAREN':
+                    next_token = next(lexer(code), None)  # First argument
+                    if next_token and next_token[0] == 'STRING':
+                        old_substring = next_token[1][1:-1].strip()  # Remove quotes and whitespace
+                        next_token = next(lexer(code), None)  # Second argument
+                        if next_token and next_token[0] == 'STRING':
+                            new_substring = next_token[1][1:-1].strip()  # Remove quotes and whitespace
+                            next_token = next(lexer(code), None)  # Expect ')'
+                            if next_token and next_token[0] == 'RPAREN':
+                                # Apply the replace method to the variable
+                                if var_name in variables:
+                                    value = variables[var_name].replace(old_substring, new_substring)
+                                else:
+                                    raise ValueError(f"Undefined variable '{var_name}'")
         yield (type_, value)
 
 if __name__ == "__main__":
-    code = '''en_nenjil_kudi_irukkum("Hello Thalapthy") 
-    a = "Hello World"
-    a = "Hello World"
-    en_nenjil_kudi_irukkum(a.yeru_yeru_muneru())
-    en_nenjil_kudi_irukkum(a.life_is_very_short_nanba())
+    code = '''en_nenjil_kudi_irukkum("  Hello Thalapthy  ") 
+
     '''
     
     tokens = list(lexer(code))  # Convert the generator to a list
-    print("Tokens:", tokens)  # Debug: Print tokens
+    print("Tokens:", tokens)  # Print tokens

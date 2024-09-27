@@ -179,7 +179,7 @@ def parser(tokens):
             if current_token() and current_token()[0] == 'MISMATCH':
                 consume('MISMATCH')
                 method_name = current_token()
-                if method_name[0] in ('UPPER', 'LOWER'):
+                if method_name[0] in ('UPPER', 'LOWER', 'REPLACE'):
                     consume(method_name[0])  # Consume the method name
                     consume('LPAREN')
                     # Ensure that the variable is defined
@@ -190,6 +190,17 @@ def parser(tokens):
                             result = value.upper() if isinstance(value, str) else str(value).upper()
                         elif method_name[0] == 'LOWER':
                             result = value.lower() if isinstance(value, str) else str(value).lower()
+                        elif method_name[0] == 'REPLACE':
+                            # Consume the first argument (old substring)
+                            old_substring = consume('STRING')  # Assuming you have a STRING token type
+                            # Consume the second argument (new substring)
+                            consume('MISMATCH')
+                            new_substring = consume('STRING')  # Assuming you have a STRING token type
+                            
+                            if isinstance(value, str):
+                                result = value.replace(old_substring, new_substring).replace(old_substring.lower(), new_substring)
+                            else:
+                                raise ValueError(f"REPLACE method can only be used on strings. Provided value is {type(value).__name__}")
                     else:
                         raise ValueError(f"Undefined variable '{var_name}'")
                     consume('RPAREN')
@@ -379,11 +390,13 @@ def parser(tokens):
 
 if __name__ == "__main__":
     code = '''en_nenjil_kudi_irukkum("Hello Thalapthy")
-    a = "Hello, World!"
+    a = "Hello, Thalapathy!"
     x = a.yeru_yeru_muneru()
     y = a.life_is_very_short_nanba()
+    z = a.nee_poo_nee_vaa("H", "J")
     en_nenjil_kudi_irukkum(a.yeru_yeru_muneru())
     en_nenjil_kudi_irukkum(y)
+    en_nenjil_kudi_irukkum(z)
     '''
     
     tokens = list(lexer(code))  # Convert the generator to a list
