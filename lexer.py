@@ -8,6 +8,7 @@ token_specification = [
     ('LOWER', r'life_is_very_short_nanba'),
     ('REPLACE', r'nee_poo_nee_vaa'),
     ('SPLIT', r'kaakhi'),
+    ('FORMAT', r'vj'),
     ('PLUS_ASSIGN', r'\+='), 
     ('MINUS_ASSIGN', r'-='), 
     ('EXPONENTIATION_ASSIGN', r'\*\*='),  
@@ -115,21 +116,23 @@ def lexer(code):
                                     value = variables[var_name].replace(old_substring, new_substring)
                                 else:
                                     raise ValueError(f"Undefined variable '{var_name}'")
-        elif type_ == 'SPLIT':
-            next_token = next(lexer(code), None)  # Get the string to split
-            if next_token and next_token[0] == 'STRING':
-                string_to_split = next_token[1]  # The string itself
-                next_token = next(lexer(code), None)  # Check if a separator is provided
-                if next_token and next_token[0] == 'STRING':
-                    separator = next_token[1]
-                value = string_to_split.split(separator)
-                print(f"Split result: {value}")
+        elif type_ == 'PRINT':
+            inside_print = True  # Entering a PRINT statement
+        elif type_ == 'RPAREN':
+            if inside_print:
+                inside_print = False  # Leaving a PRINT statement
+        elif type_ == 'FORMAT':
+            if inside_print:
+                # Treat `vj` as a format string inside PRINT
+                type_ = 'FORMAT'  # Treat it as a string token
+            else:
+                # Treat `vj` as a variable elsewhere
+                type_ = 'VARIABLE'
         yield (type_, value)
 
 if __name__ == "__main__":
-    code = '''en_nenjil_kudi_irukkum("Hello, Thalapthy")
-    kaakhi("Hello, World!")
-
+    code = '''en_nenjil_kudi_irukkum(vj"Hello, Thalapthy")
+        vj = 10
     '''
     
     tokens = list(lexer(code))  # Convert the generator to a list

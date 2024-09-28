@@ -98,3 +98,6 @@ f = "K"
 p = "O"
 y = f + p
 en_nenjil_kudi_irukkum(y)
+
+name = "Ajay"
+en_nenjil_kudi_irukkum(vj("Hello, {0}. You have new messages.", name))

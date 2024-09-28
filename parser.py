@@ -278,6 +278,28 @@ def parser(tokens):
             value = parse_expression()
             consume('RPAREN')
             return str(value)
+        elif token[0] == 'FORMAT':
+            consume('FORMAT')
+            consume('LPAREN')
+            format_string = consume('STRING')  # Assuming format string is a STRING token
+            consume('MISMATCH')  # Assuming that format arguments are separated by MISMATCHs
+            
+            # Now we process the variables/expressions to be inserted into the format string
+            format_args = []
+            while current_token() and current_token()[0] != 'RPAREN':
+                format_args.append(parse_expression())  # Capture each argument for the format string
+                if current_token() and current_token()[0] == 'MISMATCH':
+                    consume('MISMATCH')  # Move to next argument
+            
+            consume('RPAREN')  # Finish format call
+            
+            # Use Python's `format()` function to substitute placeholders with the arguments
+            try:
+                result = format_string.format(*format_args)
+            except KeyError as e:
+                raise ValueError(f"Format string error: Missing key {e}")
+            
+            return result
         elif token[0] == 'UPPER':
             consume('UPPER')
             consume('LPAREN')
@@ -324,8 +346,7 @@ def parser(tokens):
                 return left + right  # Add a space between the strings
         else:
             raise TypeError("Both arguments must be strings")
-
-
+    
     
     def handle_indexing(var_name):
         value = variables[var_name]
@@ -424,10 +445,8 @@ def parser(tokens):
 
 if __name__ == "__main__":
     code = '''en_nenjil_kudi_irukkum("Hello Thalapthy")
-    f = "K"
-    p = "O"
-    y = f + p
-    en_nenjil_kudi_irukkum(y)
+    name = "Ajay"
+    en_nenjil_kudi_irukkum(vj("Hello, {0}. You have new messages.", name))
     '''
     
     tokens = list(lexer(code))  # Convert the generator to a list
