@@ -101,3 +101,11 @@ en_nenjil_kudi_irukkum(y)
 
 name = "Ajay"
 en_nenjil_kudi_irukkum(vj("Hello, {0}. You have new messages.", name))
+z= "Ajay1234"
+en_nenjil_kudi_irukkum(z.meenuku_kaal_irukka_illaya())
+z= "Ajay"
+en_nenjil_kudi_irukkum(z.meenuku_kaal_irukka_illaya())
+z= "hello world"
+en_nenjil_kudi_irukkum(z.ips_vijaykumar())
+txt = "Hello, welcome to my world."
+en_nenjil_kudi_irukkum(txt.thamizhan("welcome"))

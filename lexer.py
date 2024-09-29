@@ -7,6 +7,11 @@ token_specification = [
     ('UPPER', r'yeru_yeru_muneru'),  # Uppercase string function
     ('LOWER', r'life_is_very_short_nanba'),
     ('REPLACE', r'nee_poo_nee_vaa'),
+    ('ALPHANUMERIC', r'meenuku_kaal_irukka_illaya'),  # New token for alphanumeric string
+    ('ALPHA', r'meenuku_kaal_irukka'),
+    ('CAPITALIZE', r'ips_vijaykumar'),
+    ('INDEX', r'thamizhan'),
+    ('JOIN', r'unma_kadhal_naa_sollu'),
     ('SPLIT', r'kaakhi'),
     ('FORMAT', r'vj'),
     ('PLUS_ASSIGN', r'\+='), 
@@ -133,6 +138,7 @@ def lexer(code):
 if __name__ == "__main__":
     code = '''en_nenjil_kudi_irukkum(vj"Hello, Thalapthy")
         vj = 10
+        v = "#".rasigan(myTuple)
     '''
     
     tokens = list(lexer(code))  # Convert the generator to a list

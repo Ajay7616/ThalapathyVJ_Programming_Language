@@ -185,7 +185,8 @@ def parser(tokens):
             if current_token() and current_token()[0] == 'MISMATCH':
                 consume('MISMATCH')
                 method_name = current_token()
-                if method_name[0] in ('UPPER', 'LOWER', 'REPLACE', 'SPLIT'):
+                if method_name[0] in ('UPPER', 'LOWER', 'REPLACE', 'SPLIT','ALPHANUMERIC', 'ALPHA', 'CAPITALIZE',
+                                      'INDEX'):
                     consume(method_name[0])  # Consume the method name
                     consume('LPAREN')
                     # Ensure that the variable is defined
@@ -220,8 +221,48 @@ def parser(tokens):
                                 result = value.split(separator)
                             else:
                                 raise ValueError(f"SPLIT method can only be used on strings. Provided value is {type(value).__name__}")
-                        
-                        # Consume RPAREN
+                        elif method_name[0] == 'ALPHANUMERIC':
+                            if isinstance(value, str):
+                                result = value.isalnum()
+                            else:
+                                raise ValueError(f"ALPHANUMERIC method can only be used on strings. Provided value is {type(value).__name__}")                        # Consume RPAREN
+                        elif method_name[0] == 'ALPHA':
+                            if isinstance(value, str):
+                                result = value.isalpha()
+                            else:
+                                raise ValueError(f"ALPHANUMERIC method can only be used on strings. Provided value is {type(value).__name__}")                        # Consume RPAREN
+                        elif method_name[0] == 'CAPITALIZE':
+                            result = value.capitalize() if isinstance(value, str) else str(value).capitalize()
+                        elif method_name[0] == 'INDEX':
+                            search_substring = consume('STRING')  # Assuming you have a STRING token type
+
+                            # Initialize start and end positions with None, meaning no range is provided
+                            start_position = None
+                            end_position = None
+
+                            # Check for optional start and end arguments
+                            if current_token() and current_token()[0] == 'MISMATCH':
+                                consume('MISMATCH')
+                                if current_token() and current_token()[0] == 'INTEGER':
+                                    start_position = consume('INTEGER')  # Consume the start position
+                                    if current_token() and current_token()[0] == 'MISMATCH':
+                                        consume('MISMATCH')  # Handle possible separator (comma or other)
+                                        if current_token() and current_token()[0] == 'INTEGER':
+                                            end_position = consume('INTEGER')  # Consume the end position
+
+                            if isinstance(value, str):
+                                # Try to find the index of the substring within the optional range
+                                try:
+                                    if start_position is not None and end_position is not None:
+                                        result = value.index(search_substring, int(start_position), int(end_position))
+                                    elif start_position is not None:
+                                        result = value.index(search_substring, int(start_position))
+                                    else:
+                                        result = value.index(search_substring)
+                                except ValueError:
+                                    raise ValueError(f"Substring '{search_substring}' not found in '{value}' within the specified range")
+                            else:
+                                raise ValueError(f"INDEX method can only be used on strings. Provided value is {type(value).__name__}")
                         consume('RPAREN')
                         return result
                     else:
@@ -445,8 +486,8 @@ def parser(tokens):
 
 if __name__ == "__main__":
     code = '''en_nenjil_kudi_irukkum("Hello Thalapthy")
-    name = "Ajay"
-    en_nenjil_kudi_irukkum(vj("Hello, {0}. You have new messages.", name))
+    txt = "Hello, welcome to my world."
+    en_nenjil_kudi_irukkum(txt.thamizhan("Hello"))
     '''
     
     tokens = list(lexer(code))  # Convert the generator to a list
