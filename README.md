@@ -1,0 +1,215 @@
+# ThalapathyVJ Programming Language
+
+## Introduction
+ThalapathyVJ is a fan-made programming language inspired by the dialogues, songs, and titles from Actor Vijay's films. This language serves as a creative tribute to the actor and includes a variety of features such as mathematical operations, string manipulation, data types, logical operators, and more.
+
+## Syntax Reference Table
+
+### String Manipulation Functions
+
+| Function                     | Reference                          | Purpose                        |
+|------------------------------|------------------------------------|--------------------------------|
+| `en_nenjil_kudi_irukkum`      | Iconic dialogue from *Thalapathy Vijay* | Prints a statement.            |
+| `yeru_yeru_muneru`            | Song reference from *Sachin*        | Converts a string to uppercase. |
+| `life_is_very_short_nanba`    | Song reference from *Master*        | Converts a string to lowercase. |
+| `nee_poo_nee_vaa`             | Comedy dialogue from *Madurey*      | Replaces a substring in a string. |
+| `meenuku_kaal_irukka_illaya` | Comedy dialogue from *Madurey*      | Checks if a string is alphanumeric. |
+| `meenuku_kaal_irukka`         | Comedy dialogue from *Madurey*      | Checks if a string is alphabetic. |
+| `ips_vijaykumar`              | Dialogue reference from *Theri*     | Capitalizes a string.          |
+| `thamizhan`                   | Movie title from *Thamizhan*        | Joins strings.                 |
+| `unma_kadhal_naa_sollu`       | Dialogue reference from *Shahjahan* | Finds the index of a word in a string. |
+| `kaakhi`                      | Comedy dialogue from *Jilla*        | Splits text into parts.        |
+
+### Data Types Functions
+
+| Function                     | Reference                          | Purpose                        |
+|------------------------------|------------------------------------|--------------------------------|
+| `naa_guru_than_pesuren`       | Dialogue reference from *Azhagiya Thamizh Magan* | Represents a string data type. |
+| `coca_cola`                   | Song reference from *Bhagavathi*    | Represents a double data type. |
+| `nei_eduthutu_vaa`            | Comedy dialogue from *Gilli*       | Represents an integer data type. |
+| `nei_nei_eduthutu_vaa`        | Comedy dialogue from *Gilli*       | Represents a float data type.  |
+| `naa_thanda_leo`              | Dialogue reference from *Leo*      | Boolean data type for True.   |
+| `naa_avan_illa`              | Dialogue reference from *Leo*      | Boolean data type for False.  |
+
+### Arithmetic Operators
+
+| Operator/Function | Reference | Purpose                           |
+|-------------------|-----------|-----------------------------------|
+| `+=`, `-=`, `*=`, `/=` | None      | Arithmetic assignment operators.  |
+| `+`, `-`, `*`, `/` | None      | Basic arithmetic operators.       |
+| `%=`               | None      | Modulus assignment operator.      |
+| `**`               | None      | Exponentiation operator.          |
+| `**=`              | None      | Exponentiation assignment operator.|
+
+### Comparison and Logical Operators
+
+| Operator/Function | Reference | Purpose                             |
+|-------------------|-----------|-------------------------------------|
+| `==`              | None      | Equality comparison operator.       |
+| `!=`              | None      | Inequality comparison operator.     |
+| `>`               | None      | Greater than operator.              |
+| `<`               | None      | Less than operator.                 |
+| `>=`              | None      | Greater than or equal comparison.   |
+| `<=`              | None      | Less than or equal comparison.      |
+| `sura`            | Movie title from *Sura* | Logical AND operator.              |
+| `kuruvi`          | Movie title from *Kuruvi* | Logical OR operator.               |
+| `villu`           | Movie title from *Villu* | Logical NOT operator.              |
+
+### Bitwise Operators
+
+| Operator   | Reference | Purpose                           |
+|------------|-----------|-----------------------------------|
+| `&`        | None      | Bitwise AND operator.             |
+| `|`        | None      | Bitwise OR operator.              |
+| `~`        | None      | Bitwise NOT operator.             |
+| `>>`       | None      | Right shift operator.             |
+| `<<`       | None      | Left shift operator.              |
+
+### Miscellaneous
+
+| Function/Operator | Reference | Purpose                           |
+|-------------------|-----------|-----------------------------------|
+| `++`              | None      | Increment operator.               |
+| `--`              | None      | Decrement operator.               |
+| `=`               | None      | Assignment operator.              |
+| `%`               | None      | Modulus operator.                 |
+
+## Example Programs
+
+### Print Statement
+
+*Image of code and output will be added.*
+
+### Calculator
+
+*Image of code and output will be added.*
+
+### String Manipulation
+
+*Image of code and output will be added.*
+
+## Implementation and Execution
+
+1. **Clone the Git Repository:**
+
+Here's how you can structure the README markdown file with a table format for the functions, their purposes, and references in the ThalapathyVJ Programming Language:
+
+markdown
+Copy code
+# ThalapathyVJ Programming Language
+
+## Introduction
+ThalapathyVJ is a fan-made programming language inspired by the dialogues, songs, and titles from Actor Vijay's films. This language serves as a creative tribute to the actor and includes a variety of features such as mathematical operations, string manipulation, data types, logical operators, and more.
+
+## Syntax Reference Table
+
+### String Manipulation Functions
+
+| Function                     | Reference                          | Purpose                        |
+|------------------------------|------------------------------------|--------------------------------|
+| `en_nenjil_kudi_irukkum`      | Iconic dialogue from *Thalapathy Vijay* | Prints a statement.            |
+| `yeru_yeru_muneru`            | Song reference from *Sachin*        | Converts a string to uppercase. |
+| `life_is_very_short_nanba`    | Song reference from *Master*        | Converts a string to lowercase. |
+| `nee_poo_nee_vaa`             | Comedy dialogue from *Madurey*      | Replaces a substring in a string. |
+| `meenuku_kaal_irukka_illaya` | Comedy dialogue from *Madurey*      | Checks if a string is alphanumeric. |
+| `meenuku_kaal_irukka`         | Comedy dialogue from *Madurey*      | Checks if a string is alphabetic. |
+| `ips_vijaykumar`              | Dialogue reference from *Theri*     | Capitalizes a string.          |
+| `thamizhan`                   | Movie title from *Thamizhan*        | Joins strings.                 |
+| `unma_kadhal_naa_sollu`       | Dialogue reference from *Shahjahan* | Finds the index of a word in a string. |
+| `kaakhi`                      | Comedy dialogue from *Jilla*        | Splits text into parts.        |
+
+### Data Types Functions
+
+| Function                     | Reference                          | Purpose                        |
+|------------------------------|------------------------------------|--------------------------------|
+| `naa_guru_than_pesuren`       | Dialogue reference from *Azhagiya Thamizh Magan* | Represents a string data type. |
+| `coca_cola`                   | Song reference from *Bhagavathi*    | Represents a double data type. |
+| `nei_eduthutu_vaa`            | Comedy dialogue from *Gilli*       | Represents an integer data type. |
+| `nei_nei_eduthutu_vaa`        | Comedy dialogue from *Gilli*       | Represents a float data type.  |
+| `naa_thanda_leo`              | Dialogue reference from *Leo*      | Boolean data type for True.   |
+| `naa_avan_illa`              | Dialogue reference from *Leo*      | Boolean data type for False.  |
+
+### Arithmetic Operators
+
+| Operator/Function | Reference | Purpose                           |
+|-------------------|-----------|-----------------------------------|
+| `+=`, `-=`, `*=`, `/=` | None      | Arithmetic assignment operators.  |
+| `+`, `-`, `*`, `/` | None      | Basic arithmetic operators.       |
+| `%=`               | None      | Modulus assignment operator.      |
+| `**`               | None      | Exponentiation operator.          |
+| `**=`              | None      | Exponentiation assignment operator.|
+
+### Comparison and Logical Operators
+
+| Operator/Function | Reference | Purpose                             |
+|-------------------|-----------|-------------------------------------|
+| `==`              | None      | Equality comparison operator.       |
+| `!=`              | None      | Inequality comparison operator.     |
+| `>`               | None      | Greater than operator.              |
+| `<`               | None      | Less than operator.                 |
+| `>=`              | None      | Greater than or equal comparison.   |
+| `<=`              | None      | Less than or equal comparison.      |
+| `sura`            | Movie title from *Sura* | Logical AND operator.              |
+| `kuruvi`          | Movie title from *Kuruvi* | Logical OR operator.               |
+| `villu`           | Movie title from *Villu* | Logical NOT operator.              |
+
+### Bitwise Operators
+
+| Operator   | Reference | Purpose                           |
+|------------|-----------|-----------------------------------|
+| `&`        | None      | Bitwise AND operator.             |
+| `|`        | None      | Bitwise OR operator.              |
+| `~`        | None      | Bitwise NOT operator.             |
+| `>>`       | None      | Right shift operator.             |
+| `<<`       | None      | Left shift operator.              |
+
+### Miscellaneous
+
+| Function/Operator | Reference | Purpose                           |
+|-------------------|-----------|-----------------------------------|
+| `++`              | None      | Increment operator.               |
+| `--`              | None      | Decrement operator.               |
+| `=`               | None      | Assignment operator.              |
+| `%`               | None      | Modulus operator.                 |
+
+## Example Programs
+
+### Print Statement
+
+*Image of code and output will be added.*
+
+### Calculator
+
+*Image of code and output will be added.*
+
+### String Manipulation
+
+*Image of code and output will be added.*
+
+## Implementation and Execution
+
+1. **Clone the Git Repository:**
+https://github.com/Ajay7616/ThalapathyVJ_Programming_Language.git
+
+
+2. **Write your code** in any text editor and save the file with the `.tvj` extension.
+
+3. **Execute the code**:
+Open the terminal and run the following command:
+python interpreter.py filename.tvj
+
+
+## How It Works
+
+- **Lexer.py**: Tokenizes the code (e.g., `int`, `float`, `string`) based on the custom keywords and syntax of ThalapathyVJ.
+- **Parser.py**: Handles the logical processing and evaluation of the tokens according to the programming language's rules.
+- **Interpreter.py**: Uses both the lexer and parser to process the code and produce the output.
+- **test.tvj**: Sample file for testing the code written in ThalapathyVJ language.
+
+### Added Advantage
+
+By changing the tokenizing words in the lexer and adjusting the extension in the interpreter file, you can create your own programming language.
+
+### Future Updates
+
+Future updates will include support for additional data types such as lists, tuples, dictionaries, and sets, along with conditional statements and object-oriented programming (OOP) concepts.

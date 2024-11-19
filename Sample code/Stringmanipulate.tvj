@@ -1,0 +1,28 @@
+a = "Hello, World!"
+en_nenjil_kudi_irukkum(a[0])
+en_nenjil_kudi_irukkum(a[1])
+en_nenjil_kudi_irukkum(a[1:3])
+en_nenjil_kudi_irukkum(a[-1])
+en_nenjil_kudi_irukkum(a[-3:-1])
+en_nenjil_kudi_irukkum(a[1:])
+en_nenjil_kudi_irukkum(a[:-1])
+en_nenjil_kudi_irukkum(a.yeru_yeru_muneru())
+en_nenjil_kudi_irukkum(a.life_is_very_short_nanba())
+en_nenjil_kudi_irukkum(" Hello, World! ")
+en_nenjil_kudi_irukkum(a.nee_poo_nee_vaa("O", "J"))
+en_nenjil_kudi_irukkum(a.kaakhi("o"))
+f = "K"
+p = "O"
+y = f + p
+en_nenjil_kudi_irukkum(y)
+
+name = "Ajay"
+en_nenjil_kudi_irukkum(vj("Hello, {0}. You have new messages.", name))
+z= "Ajay1234"
+en_nenjil_kudi_irukkum(z.meenuku_kaal_irukka_illaya())
+z= "Ajay"
+en_nenjil_kudi_irukkum(z.meenuku_kaal_irukka_illaya())
+z= "hello world"
+en_nenjil_kudi_irukkum(z.ips_vijaykumar())
+txt = "Hello, welcome to my world."
+en_nenjil_kudi_irukkum(txt.thamizhan("welcome"))
