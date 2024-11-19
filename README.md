@@ -176,15 +176,29 @@ ThalapathyVJ is a fan-made programming language inspired by the dialogues, songs
 
 ### Print Statement
 
-*Image of code and output will be added.*
+#### Code
+![image](https://github.com/user-attachments/assets/2bcd1943-ecc7-44ac-b9fb-9ec237298758)
+
+#### Output
+![image](https://github.com/user-attachments/assets/251ab43e-317b-4228-85c6-d1c827e0e3ec)
+
 
 ### Calculator
 
-*Image of code and output will be added.*
+#### Code
+![image](https://github.com/user-attachments/assets/d014c1e0-512e-4e08-a781-21b1daff60a8)
+
+#### Output
+![image](https://github.com/user-attachments/assets/c7e21eb9-8a67-4cf3-8951-bccbcdb6856e)
+
 
 ### String Manipulation
 
-*Image of code and output will be added.*
+#### Code
+![image](https://github.com/user-attachments/assets/866e4f93-3251-4edc-b1a5-0e2f3aebca5a)
+
+#### Output
+![image](https://github.com/user-attachments/assets/023c4c01-5b5a-44bc-ac47-72ff4599fe66)
 
 ## Implementation and Execution
 
