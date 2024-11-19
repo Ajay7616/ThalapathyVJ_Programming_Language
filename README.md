@@ -4,6 +4,19 @@
 ## Introduction
 ThalapathyVJ is a fan-made programming language inspired by the dialogues, songs, and titles from Actor Vijay's films. This language serves as a creative tribute to the actor and includes a variety of features such as mathematical operations, string manipulation, data types, logical operators, and more.
 
+## Who is Vijay?
+
+Vijay, is an Indian actor and playback singer who works in Tamil cinema. In a career spanning over three decades, Vijay has acted in 68 films. He has been referred to as "Thalapathy". 
+
+For more details, click on it -> [Vijay (actor) on Wikipedia](https://en.wikipedia.org/wiki/Vijay_(actor))
+
+---
+
+## Origin of Idea
+
+I got this idea from two languages: **Bhai language** and **Rajini++**. I got inspired from them and made this language.
+
+
 ## Syntax Reference Table
 
 ### String Manipulation Functions
