@@ -4,10 +4,10 @@ import re
 token_specification = [
     ('MULTILINE_STRING', r'""".*?"""|\'\'\'.*?\'\'\''),
     ('PRINT', r'en_nenjil_kudi_irukkum'),
-    ('UPPER', r'yeru_yeru_muneru'),  # Uppercase string function
+    ('UPPER', r'yeru_yeru_muneru'), 
     ('LOWER', r'life_is_very_short_nanba'),
     ('REPLACE', r'nee_poo_nee_vaa'),
-    ('ALPHANUMERIC', r'meenuku_kaal_irukka_illaya'),  # New token for alphanumeric string
+    ('ALPHANUMERIC', r'meenuku_kaal_irukka_illaya'), 
     ('ALPHA', r'meenuku_kaal_irukka'),
     ('CAPITALIZE', r'ips_vijaykumar'),
     ('INDEX', r'thamizhan'),
@@ -33,13 +33,13 @@ token_specification = [
     ('NOT_EQUALS', r'!='),  
     ('GREATER_THAN_EQUAL', r'>='),  
     ('LESS_THAN_EQUAL', r'<='),  
-    ('LEFT_SHIFT', r'<<'),  # Zero fill left shift
-    ('RIGHT_SHIFT', r'>>'),  # Signed right shift
+    ('LEFT_SHIFT', r'<<'),  
+    ('RIGHT_SHIFT', r'>>'), 
     ('GREATER_THAN', r'>'),
     ('LESS_THAN', r'<'),
-    ('AND', r'sura'),      # Logical AND
-    ('OR', r'kuruvi'),      # Logical OR
-    ('NOT', r'villu'),      # Logical NOT
+    ('AND', r'sura'),      
+    ('OR', r'kuruvi'),      
+    ('NOT', r'villu'),      
     ('VARIABLE', r'[a-zA-Z_][a-zA-Z_0-9]*'),  
     ('ASSIGN', r'='), 
     ('INCREMENT', r'\+\+'),
@@ -66,7 +66,7 @@ token_specification = [
     ('MISMATCH', r'.'),
 ]
 
-# Create a regex pattern from token specifications
+
 token_regex = '|'.join(f'(?P<{pair[0]}>{pair[1]})' for pair in token_specification)
 
 def lexer(code):
@@ -79,26 +79,24 @@ def lexer(code):
         elif type_ == 'SKIP':
             continue
         elif type_ == 'STRING':
-            value = value[1:-1].strip()  # Remove quotes and whitespace
+            value = value[1:-1].strip()  
         elif type_ == 'MULTILINE_STRING':
-            value = value[3:-3].strip()  # Remove surrounding quotes and whitespace
+            value = value[3:-3].strip() 
         elif type_ == 'INTEGER':
             value = int(value)
         elif type_ == 'FLOAT_NUMBER':
             value = float(value)
         elif type_ in ('INT', 'FLOAT', 'DOUBLE', 'STRING_FUNC'):
-            pass  # Preserve original strings
+            pass 
         elif type_ == 'TRUE':
-            value = True  # Convert to Python boolean True
+            value = True 
         elif type_ == 'FALSE':
-            value = False  # Convert to Python boolean False
+            value = False 
         elif type_ == 'UPPER':
-            # Find next token and apply .upper() method
             next_token = next(lexer(code), None)
             if next_token and next_token[0] == 'STRING':
                 value = next_token[1].upper()
         elif type_ == 'LOWER':
-            # Find next token and apply .lower() method
             next_token = next(lexer(code), None)
             if next_token and next_token[0] == 'STRING':
                 value = next_token[1].lower()
@@ -106,32 +104,29 @@ def lexer(code):
             next_token = next(lexer(code), None)
             if next_token and next_token[0] == 'VARIABLE':
                 var_name = next_token[1]
-                next_token = next(lexer(code), None)  # Expect '('
+                next_token = next(lexer(code), None)  
                 if next_token and next_token[0] == 'LPAREN':
-                    next_token = next(lexer(code), None)  # First argument
+                    next_token = next(lexer(code), None) 
                     if next_token and next_token[0] == 'STRING':
-                        old_substring = next_token[1][1:-1].strip()  # Remove quotes and whitespace
-                        next_token = next(lexer(code), None)  # Second argument
+                        old_substring = next_token[1][1:-1].strip()  
+                        next_token = next(lexer(code), None) 
                         if next_token and next_token[0] == 'STRING':
-                            new_substring = next_token[1][1:-1].strip()  # Remove quotes and whitespace
-                            next_token = next(lexer(code), None)  # Expect ')'
+                            new_substring = next_token[1][1:-1].strip()
+                            next_token = next(lexer(code), None) 
                             if next_token and next_token[0] == 'RPAREN':
-                                # Apply the replace method to the variable
                                 if var_name in variables:
                                     value = variables[var_name].replace(old_substring, new_substring)
                                 else:
                                     raise ValueError(f"Undefined variable '{var_name}'")
         elif type_ == 'PRINT':
-            inside_print = True  # Entering a PRINT statement
+            inside_print = True 
         elif type_ == 'RPAREN':
             if inside_print:
-                inside_print = False  # Leaving a PRINT statement
+                inside_print = False 
         elif type_ == 'FORMAT':
             if inside_print:
-                # Treat `vj` as a format string inside PRINT
-                type_ = 'FORMAT'  # Treat it as a string token
+                type_ = 'FORMAT' 
             else:
-                # Treat `vj` as a variable elsewhere
                 type_ = 'VARIABLE'
         yield (type_, value)
 
@@ -141,5 +136,5 @@ if __name__ == "__main__":
         v = "#".rasigan(myTuple)
     '''
     
-    tokens = list(lexer(code))  # Convert the generator to a list
-    print("Tokens:", tokens)  # Print tokens
+    tokens = list(lexer(code))  
+    print("Tokens:", tokens) 
