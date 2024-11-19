@@ -1,6 +1,5 @@
 import re
 
-# Define token types and regular expressions
 token_specification = [
     ('MULTILINE_STRING', r'""".*?"""|\'\'\'.*?\'\'\''),
     ('PRINT', r'en_nenjil_kudi_irukkum'),
