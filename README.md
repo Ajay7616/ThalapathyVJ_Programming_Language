@@ -61,7 +61,7 @@ ThalapathyVJ is a fan-made programming language inspired by the dialogues, songs
 | Operator   | Reference | Purpose                           |
 |------------|-----------|-----------------------------------|
 | `&`        | None      | Bitwise AND operator.             |
-| |        | None      | Bitwise OR operator.              |
+| `|`        | None      | Bitwise OR operator.              |
 | `~`        | None      | Bitwise NOT operator.             |
 | `>>`       | None      | Right shift operator.             |
 | `<<`       | None      | Left shift operator.              |
