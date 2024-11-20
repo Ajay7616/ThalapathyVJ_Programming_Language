@@ -2,15 +2,22 @@ from lexer import lexer
 from parser import parser
 
 def interpret_from_file(filename):
-    with open(filename, 'r') as file:
-        code = file.read()
+    if not filename.endswith('.tvj'):
+        print("Error: The file must have a .tvj extension.")
+        return
     
-    # Tokenize the code
-    tokens = lexer(code)
-    tokens_list = list(tokens)  # Convert generator to list
-    
-    # Parse the tokens
-    parser(tokens_list)
+    try:
+        with open(filename, 'r') as file:
+            code = file.read()
+        
+        tokens = lexer(code)
+        tokens_list = list(tokens)
+        
+        parser(tokens_list)
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     import sys
@@ -18,4 +25,4 @@ if __name__ == "__main__":
         filename = sys.argv[1]
         interpret_from_file(filename)
     else:
-        print("Please provide the filename as an argument.")
+        print("Please provide the filename with a .tvj extension as an argument.")

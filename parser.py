@@ -1,8 +1,8 @@
 from lexer import lexer
 
 def parser(tokens):
-    index = 0  # Current position in the tokens list
-    variables = {}  # Dictionary to store variable values
+    index = 0 
+    variables = {}  
 
     def current_token():
         return tokens[index] if index < len(tokens) else None
@@ -21,7 +21,7 @@ def parser(tokens):
         consume('LPAREN')
         expression = parse_expression()
         consume('RPAREN')
-        print(expression)  # Print the evaluated expression
+        print(expression)  
         return expression
 
     def parse_assignment():
@@ -31,7 +31,6 @@ def parser(tokens):
                                             'PLUS_ASSIGN', 'MINUS_ASSIGN', 
                                             'MULTIPLY_ASSIGN', 'DIVIDE_ASSIGN', 
                                             'MODULUS_ASSIGN', 'FLOOR_DIVIDE_ASSIGN', 'EXPONENTIATION_ASSIGN'):
-            # Assignment with operators
             if next_token[0] == 'INCREMENT':
                 variables[var_name] = variables.get(var_name, 0) + 1
                 consume('INCREMENT')
@@ -79,7 +78,6 @@ def parser(tokens):
     def parse_expression():
         return parse_logical_expression()
 
-    # Logical Expressions: OR (kuruvi)
     def parse_logical_expression():
         left = parse_and_expression()
         while current_token() and current_token()[0] == 'OR':
@@ -88,7 +86,6 @@ def parser(tokens):
             left = left or right
         return left
 
-    # AND Expressions: AND (sura)
     def parse_and_expression():
         left = parse_equality_expression()
         while current_token() and current_token()[0] == 'AND':
@@ -103,11 +100,11 @@ def parser(tokens):
             if current_token()[0] == 'EQUALS':
                 consume('EQUALS')
                 right = parse_comparison_expression()
-                left = (left == right)  # Evaluate the equality
+                left = (left == right)  
             elif current_token()[0] == 'NOT_EQUALS':
                 consume('NOT_EQUALS')
                 right = parse_comparison_expression()
-                left = (left != right)  # Evaluate the inequality
+                left = (left != right)  
         return left
 
     def parse_comparison_expression():
@@ -132,13 +129,12 @@ def parser(tokens):
             right = parse_multiplicative_expression()
             
             if op == '+':
-                # Only use string_concatenation when adding strings
                 if isinstance(left, str) or isinstance(right, str):
                     left = string_concatenation(left, right)
                 else:
-                    left += right  # Perform normal addition for non-strings
+                    left += right  
             elif op == '-':
-                left -= right  # Subtraction remains the same
+                left -= right  
         return left
 
 
@@ -152,11 +148,11 @@ def parser(tokens):
                 left *= right
             elif op == '/':
                 left /= right
-            elif op == '//':  # Handle floor division
+            elif op == '//': 
                 left //= right
             elif op == '%':
-                left %= right  # Handle modulus operation
-            elif op == '**':  # Handle exponentiation
+                left %= right  
+            elif op == '**':  
                 left **= right
             elif op == '&':
                 left &= right
@@ -164,9 +160,9 @@ def parser(tokens):
                 left |= right
             elif op == '^':
                 left ^= right
-            elif op == '<<':  # Handle left shift
+            elif op == '<<': 
                 left <<= right
-            elif op == '>>':  # Handle right shift
+            elif op == '>>': 
                 left >>= right
         return left
 
@@ -177,7 +173,7 @@ def parser(tokens):
         elif token[0] == 'FLOAT_NUMBER':
             return float(consume('FLOAT_NUMBER'))
         elif token[0] == 'STRING':
-            return consume('STRING')  # Return string without quotes
+            return consume('STRING')  
         elif token[0] == 'MULTILINE_STRING':
             return consume('MULTILINE_STRING')
         elif token[0] == 'VARIABLE':
@@ -187,36 +183,29 @@ def parser(tokens):
                 method_name = current_token()
                 if method_name[0] in ('UPPER', 'LOWER', 'REPLACE', 'SPLIT','ALPHANUMERIC', 'ALPHA', 'CAPITALIZE',
                                       'INDEX'):
-                    consume(method_name[0])  # Consume the method name
+                    consume(method_name[0])  
                     consume('LPAREN')
-                    # Ensure that the variable is defined
                     if var_name in variables:
                         value = variables[var_name]
-                        # Call the appropriate method based on the method name
                         if method_name[0] == 'UPPER':
                             result = value.upper() if isinstance(value, str) else str(value).upper()
                         elif method_name[0] == 'LOWER':
                             result = value.lower() if isinstance(value, str) else str(value).lower()
                         elif method_name[0] == 'REPLACE':
-                            # Consume the first argument (old substring)
-                            old_substring = consume('STRING')  # Assuming you have a STRING token type
-                            # Consume the second argument (new substring)
+                            old_substring = consume('STRING')  
                             consume('MISMATCH')
-                            new_substring = consume('STRING')  # Assuming you have a STRING token type
+                            new_substring = consume('STRING')  
                             
                             if isinstance(value, str):
                                 result = value.replace(old_substring, new_substring).replace(old_substring.lower(), new_substring)
                             else:
                                 raise ValueError(f"REPLACE method can only be used on strings. Provided value is {type(value).__name__}")
                         elif method_name[0] == 'SPLIT':
-                            # Initialize the separator with whitespace as default
-                            separator = ' '  # Default separator
+                            separator = ' '
                             
-                            # Check for optional separator argument
                             if current_token() and current_token()[0] == 'STRING':
-                                separator = consume('STRING')  # Use the provided separator
+                                separator = consume('STRING')  
                             
-                            # Ensure the value is a string
                             if isinstance(value, str):
                                 result = value.split(separator)
                             else:
@@ -225,33 +214,30 @@ def parser(tokens):
                             if isinstance(value, str):
                                 result = value.isalnum()
                             else:
-                                raise ValueError(f"ALPHANUMERIC method can only be used on strings. Provided value is {type(value).__name__}")                        # Consume RPAREN
+                                raise ValueError(f"ALPHANUMERIC method can only be used on strings. Provided value is {type(value).__name__}")                       
                         elif method_name[0] == 'ALPHA':
                             if isinstance(value, str):
                                 result = value.isalpha()
                             else:
-                                raise ValueError(f"ALPHANUMERIC method can only be used on strings. Provided value is {type(value).__name__}")                        # Consume RPAREN
+                                raise ValueError(f"ALPHANUMERIC method can only be used on strings. Provided value is {type(value).__name__}")                        
                         elif method_name[0] == 'CAPITALIZE':
                             result = value.capitalize() if isinstance(value, str) else str(value).capitalize()
                         elif method_name[0] == 'INDEX':
-                            search_substring = consume('STRING')  # Assuming you have a STRING token type
+                            search_substring = consume('STRING')  
 
-                            # Initialize start and end positions with None, meaning no range is provided
                             start_position = None
                             end_position = None
 
-                            # Check for optional start and end arguments
                             if current_token() and current_token()[0] == 'MISMATCH':
                                 consume('MISMATCH')
                                 if current_token() and current_token()[0] == 'INTEGER':
-                                    start_position = consume('INTEGER')  # Consume the start position
+                                    start_position = consume('INTEGER') 
                                     if current_token() and current_token()[0] == 'MISMATCH':
-                                        consume('MISMATCH')  # Handle possible separator (comma or other)
+                                        consume('MISMATCH')  
                                         if current_token() and current_token()[0] == 'INTEGER':
-                                            end_position = consume('INTEGER')  # Consume the end position
+                                            end_position = consume('INTEGER') 
 
                             if isinstance(value, str):
-                                # Try to find the index of the substring within the optional range
                                 try:
                                     if start_position is not None and end_position is not None:
                                         result = value.index(search_substring, int(start_position), int(end_position))
@@ -285,9 +271,8 @@ def parser(tokens):
             return float(value)
         elif token[0] == 'MINUS':
             consume('MINUS')
-            # Now parse the following INTEGER token
             if current_token() and current_token()[0] == 'INTEGER':
-                return -int(consume('INTEGER'))  # Return negative integer
+                return -int(consume('INTEGER')) 
             raise ValueError("Expected integer after minus sign.")
         elif token[0] == 'INT':
             consume('INT')
@@ -322,19 +307,17 @@ def parser(tokens):
         elif token[0] == 'FORMAT':
             consume('FORMAT')
             consume('LPAREN')
-            format_string = consume('STRING')  # Assuming format string is a STRING token
-            consume('MISMATCH')  # Assuming that format arguments are separated by MISMATCHs
+            format_string = consume('STRING')  
+            consume('MISMATCH')  
             
-            # Now we process the variables/expressions to be inserted into the format string
             format_args = []
             while current_token() and current_token()[0] != 'RPAREN':
-                format_args.append(parse_expression())  # Capture each argument for the format string
+                format_args.append(parse_expression()) 
                 if current_token() and current_token()[0] == 'MISMATCH':
-                    consume('MISMATCH')  # Move to next argument
+                    consume('MISMATCH')  
             
-            consume('RPAREN')  # Finish format call
+            consume('RPAREN')  
             
-            # Use Python's `format()` function to substitute placeholders with the arguments
             try:
                 result = format_string.format(*format_args)
             except KeyError as e:
@@ -344,7 +327,7 @@ def parser(tokens):
         elif token[0] == 'UPPER':
             consume('UPPER')
             consume('LPAREN')
-            value = parse_expression()  # Get the string expression
+            value = parse_expression()  
             consume('RPAREN')
             if isinstance(value, str):
                 return value.upper()
@@ -353,7 +336,7 @@ def parser(tokens):
         elif token[0] == 'LOWER':
             consume('LOWER')
             consume('LPAREN')
-            value = parse_expression()  # Get the string expression
+            value = parse_expression() 
             consume('RPAREN')
             if isinstance(value, str):
                 return value.lower()
@@ -380,11 +363,10 @@ def parser(tokens):
     def string_concatenation(left, right):
         """Concatenates two strings, adding a space only if necessary."""
         if isinstance(left, str) and isinstance(right, str):
-            # Check for space before the `+` sign in `left`
             if left.endswith(" ") or right.startswith(" "):
-                return left + " " + right  # Concatenate without additional space
+                return left + " " + right  
             else:
-                return left + right  # Add a space between the strings
+                return left + right  
         else:
             raise TypeError("Both arguments must be strings")
     
@@ -404,55 +386,43 @@ def parser(tokens):
         if current_token() and current_token()[0] == 'COLON':
             consume('COLON')
             
-            # Handle negative end index (e.g., a[:-1])
             if current_token() and current_token()[0] == 'MINUS':
                 consume('MINUS')
                 end_index = -parse_expression()
             else:
                 end_index = parse_expression()
 
-            # Default start_index to 0 for slices like a[:5] or a[:-1]
             start_index = 0
         else:
             start_index = parse_expression()
         
-
-        # Check for COLON to determine if there's an end index
         if current_token() and current_token()[-2] == 'COLON':
             consume('COLON')
-            # Set end_index to the length of value if no expression follows the colon
             if current_token() and current_token()[0] != 'RBRACKET':
-                end_index = parse_expression()  # Parse end index after the colon
+                end_index = parse_expression()  
             else:
                 end_index = len(value)
 
-        # If end_index is still None, set it based on start_index
         if end_index is None:
             if start_index >= 0:
-                end_index = start_index + 1  # Set end_index to start_index + 1
+                end_index = start_index + 1  
             else:
-                end_index = len(value)  # Default to length of value if start_index is not positive
+                end_index = len(value)  
 
         consume('RBRACKET')
 
-        # Handling slicing
         if isinstance(value, str):
-            # Adjust for negative indexing
             if isinstance(start_index, int):
-                # Handle negative indexing for start_index
                 if start_index < 0:
                     start_index += len(value)
 
-                # Handle negative indexing for end_index if it's defined
                 if end_index is not None and end_index < 0:
                     end_index += len(value)
 
-                # Check for valid indices
                 if 0 <= start_index <= len(value) and 0 <= end_index <= len(value):
-                    # Ensure start_index is always less than end_index
                     if start_index > end_index:
                         start_index, end_index = end_index, start_index
-                    result = value[start_index:end_index]  # Return the sliced string
+                    result = value[start_index:end_index] 
                     return result
                 else:
                     raise ValueError(f"Index {start_index}:{end_index} out of bounds for string '{value}'")
@@ -490,8 +460,8 @@ if __name__ == "__main__":
     en_nenjil_kudi_irukkum(txt.thamizhan("Hello"))
     '''
     
-    tokens = list(lexer(code))  # Convert the generator to a list
-    print("Tokens:", tokens)  # Debug: Print tokens
+    tokens = list(lexer(code))  
+    print("Tokens:", tokens)  
 
     try:
         parser(tokens)
