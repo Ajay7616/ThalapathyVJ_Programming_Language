@@ -139,7 +139,3 @@ python interpreter.py filename.tvj
 ### Added Advantage
 
 By changing the tokenizing words in the lexer and adjusting the extension in the interpreter file, you can create your own programming language.
-
-### Future Updates
-
-Future updates will include support for additional data types such as lists, tuples, dictionaries, and sets, along with conditional statements and object-oriented programming (OOP) concepts.
